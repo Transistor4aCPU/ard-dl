@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ $(curl $1 | grep -c '"_quality":4') -eq 1 ]
+	then wget -O "$2" $(curl $1 | grep -o -P '"_quality":4.{0,200}' | sed 's/"_quality":4,"_stream"://g' | sed 's/"/\n/g' | grep https)
+	elif [ $(curl $1 | grep -c '"_quality":3') -eq 1 ]
+		then wget -O "$2" $(curl $1 | grep -o -P '"_quality":3.{0,200}' | sed 's/"_quality":3,"_stream"://g' | sed 's/"/\n/g' | grep https)
+        elif [ $(curl $1 | grep -c '"_quality":2') -eq 1 ]
+                then wget -O "$2" $(curl $1 | grep -o -P '"_quality":2.{0,200}' | sed 's/"_quality":2,"_stream"://g' | sed 's/"/\n/g' | grep https)
+        elif [ $(curl $1 | grep -c '"_quality":1') -eq 1 ]
+                then wget -O "$2" $(curl $1 | grep -o -P '"_quality":1.{0,200}' | sed 's/"_quality":1,"_stream"://g' | sed 's/"/\n/g' | grep https)
+fi
+exit
